@@ -1,40 +1,45 @@
 <?php
-class Supplier {
-    private $db;
 
-    public function __construct($database) {
-        $this->db = $database;
+require_once '../config/database.php';
+require_once '../models/Barang.php';
+
+class BarangController {
+    private $model;
+
+    public function __construct($db) {
+        $this->model = new Barang($db);
     }
 
-    // Ambil semua supplier
-    public function getAllSupplier() {
-        $stmt = $this->db->query("SELECT * FROM supplier ORDER BY supplier_id DESC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Ambil semua barang
+    public function index() {
+        return $this->model->getAll();
     }
 
-    // Tambah supplier
-    public function addSupplier($nama, $kontak, $telepon, $email, $alamat) {
-        $stmt = $this->db->prepare("
-            INSERT INTO supplier (nama_supplier, kontak, telepon, email, alamat) 
-            VALUES (?, ?, ?, ?, ?)
-        ");
-        return $stmt->execute([$nama, $kontak, $telepon, $email, $alamat]);
+    // Ambil barang berdasarkan ID
+    public function show($id) {
+        return $this->model->getById($id);
     }
 
-    // Edit supplier
-    public function updateSupplier($id, $nama, $kontak, $telepon, $email, $alamat) {
-        $stmt = $this->db->prepare("
-            UPDATE supplier 
-            SET nama_supplier=?, kontak=?, telepon=?, email=?, alamat=? 
-            WHERE supplier_id=?
-        ");
-        return $stmt->execute([$nama, $kontak, $telepon, $email, $alamat, $id]);
+    // Tambah barang baru
+    public function store($data) {
+        if (isset($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'])) {
+            return $this->model->create($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id']);
+        }
+        return ["error" => "Data tidak lengkap"];
     }
 
-    // Hapus supplier
-    public function deleteSupplier($id) {
-        $stmt = $this->db->prepare("DELETE FROM supplier WHERE supplier_id=?");
-        return $stmt->execute([$id]);
+    // Update barang
+    public function update($id, $data) {
+        if (isset($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'])) {
+            return $this->model->update($id, $data['nama'], $data['kategori'], $data['stok'], $data['supplier_id']);
+        }
+        return ["error" => "Data tidak lengkap"];
+    }
+
+    // Hapus barang
+    public function destroy($id) {
+        return $this->model->delete($id);
     }
 }
+
 ?>
