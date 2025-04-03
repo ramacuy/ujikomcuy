@@ -1,0 +1,187 @@
+/* Reset dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body */
+body {
+    background: #f4f7f6;
+}
+
+/* Navbar */
+.navbar {
+    height: 56px;
+    line-height: 56px;
+    transition: all 0.3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #212529;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.shrink {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #343a40;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    padding-top: 20px;
+    transition: all 0.3s ease-in-out;
+    overflow-x: hidden;
+}
+
+#sidebar.hide {
+    width: 0;
+    padding: 0;
+}
+
+/* Link di sidebar */
+#sidebar .nav-link {
+    padding: 10px 15px;
+    color: white;
+    transition: background 0.3s;
+}
+
+#sidebar .nav-link:hover,
+#sidebar .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Konten utama */
+.content {
+    margin-top: 70px;
+    margin-left: 260px;
+    padding: 20px;
+    max-width: 80%;
+    transition: margin-left 0.3s, max-width 0.3s;
+}
+
+.content.full-width {
+    margin-left: 60px;
+    max-width: 90%;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 200px;
+    }
+
+    .content {
+        margin-left: 210px;
+        max-width: 75%;
+    }
+
+    #sidebar.hide {
+        width: 0;
+    }
+
+    .content.full-width {
+        margin-left: 20px;
+        max-width: 95%;
+    }
+}
+
+/* ======= LOGIN PAGE ======= */
+.login-container {
+    background: #fff;
+    padding: 25px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin: 50px auto;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Input field */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+.input-group input:focus {
+    border: 1px solid #007bff;
+    outline: none;
+}
+
+/* Tombol login */
+.login-btn {
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.login-btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Link daftar */
+.register-link {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #212529;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #ffffff;
+}

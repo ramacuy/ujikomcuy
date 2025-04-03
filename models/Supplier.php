@@ -1,14 +1,14 @@
 <?php
 
-require_once '../config/database.php';
+require_once 'config/database.php';
 
 class Supplier {
     private $conn;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct() {
+        $database = new Database();
+        $this->conn = $database->connect(); 
     }
-
     // Ambil semua supplier
     public function getAll() {
         $query = "SELECT * FROM supplier";

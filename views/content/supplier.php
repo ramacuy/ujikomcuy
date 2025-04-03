@@ -1,7 +1,5 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <?php
-// Ensure the suppliers variable is available
-$suppliers = $suppliers ?? [];
+$supplier = $supplier ?? [];
 ?>
 
 <div class="container mt-5">
@@ -27,26 +25,22 @@ $suppliers = $suppliers ?? [];
                     <th>Nama Supplier</th>
                     <th>Kontak</th>
                     <th>Alamat</th>
-                    <th>Telepon</th>
-                    <th>Email</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($suppliers)) : ?>
-                    <?php $no = 1; foreach ($suppliers as $supplier) : ?>
+                <?php if (!empty($supplier)) : ?>
+                    <?php $no = 1; foreach ($supplier as $s) : ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= htmlspecialchars($supplier['nama_supplier'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($supplier['kontak'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($supplier['alamat'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($supplier['telepon'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($supplier['email'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?= htmlspecialchars($s['nama'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?= htmlspecialchars($s['kontak'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?= htmlspecialchars($s['alamat'], ENT_QUOTES, 'UTF-8'); ?></td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $supplier['supplier_id']; ?>">
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $s['id_supplier']; ?>">
                                     Edit
                                 </button>
-                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $supplier['supplier_id']; ?>">
+                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $s['id_supplier']; ?>">
                                     Hapus
                                 </button>
                             </td>
@@ -71,10 +65,10 @@ $suppliers = $suppliers ?? [];
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="index.php?page=supplier&action=tambah" method="POST">
+                <form action="index.php?page=supplier&action=store" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Nama Supplier</label>
-                        <input type="text" name="nama_supplier" class="form-control" required>
+                        <input type="text" name="nama" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Kontak</label>
@@ -84,14 +78,6 @@ $suppliers = $suppliers ?? [];
                         <label class="form-label">Alamat</label>
                         <textarea name="alamat" class="form-control"></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Telepon</label>
-                        <input type="text" name="telepon" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control">
-                    </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
@@ -100,9 +86,9 @@ $suppliers = $suppliers ?? [];
 </div>
 
 <!-- Edit & Delete Modals -->
-<?php foreach ($suppliers as $supplier) : ?>
+<?php foreach ($supplier as $s) : ?>
     <!-- Edit Supplier Modal -->
-    <div class="modal fade" id="modalEdit<?= $supplier['supplier_id']; ?>" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalEdit<?= $s['id_supplier']; ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -110,27 +96,19 @@ $suppliers = $suppliers ?? [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="index.php?page=supplier&action=edit" method="POST">
-                        <input type="hidden" name="supplier_id" value="<?= $supplier['supplier_id']; ?>">
+                    <form action="index.php?page=supplier&action=update" method="POST">
+                        <input type="hidden" name="is_supplier" value="<?= $s['id_supplier']; ?>">
                         <div class="mb-3">
                             <label class="form-label">Nama Supplier</label>
-                            <input type="text" name="nama_supplier" class="form-control" value="<?= htmlspecialchars($supplier['nama_supplier'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                            <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($s['nama'], ENT_QUOTES, 'UTF-8'); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Kontak</label>
-                            <input type="text" name="kontak" class="form-control" value="<?= htmlspecialchars($supplier['kontak'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <input type="text" name="kontak" class="form-control" value="<?= htmlspecialchars($s['kontak'], ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Alamat</label>
-                            <textarea name="alamat" class="form-control"><?= htmlspecialchars($supplier['alamat'], ENT_QUOTES, 'UTF-8'); ?></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Telepon</label>
-                            <input type="text" name="telepon" class="form-control" value="<?= htmlspecialchars($supplier['telepon'], ENT_QUOTES, 'UTF-8'); ?>">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($supplier['email'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <textarea name="alamat" class="form-control"><?= htmlspecialchars($s['alamat'], ENT_QUOTES, 'UTF-8'); ?></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
@@ -140,7 +118,7 @@ $suppliers = $suppliers ?? [];
     </div>
 
     <!-- Delete Supplier Modal -->
-    <div class="modal fade" id="modalHapus<?= $supplier['supplier_id']; ?>" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalHapus<?= $s['id_supplier']; ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -148,12 +126,12 @@ $suppliers = $suppliers ?? [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Yakin ingin menghapus supplier <strong><?= htmlspecialchars($supplier['nama_supplier'], ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
+                    <p>Yakin ingin menghapus supplier <strong><?= htmlspecialchars($s['nama'], ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <form action="index.php?page=supplier&action=delete" method="POST">
-                        <input type="hidden" name="supplier_id" value="<?= $supplier['supplier_id']; ?>">
+                    <form action="index.php?page=supplier&action=destroy" method="POST">
+                        <input type="hidden" name="id_supplier" value="<?= $s['id_supplier']; ?>">
                         <button type="submit" class="btn btn-danger">Hapus</button>
                     </form>
                 </div>
@@ -161,5 +139,3 @@ $suppliers = $suppliers ?? [];
         </div>
     </div>
 <?php endforeach; ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

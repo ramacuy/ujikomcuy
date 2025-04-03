@@ -1,7 +1,7 @@
 <?php
 
-require_once '../config/database.php';
-require_once '../models/Barang.php';
+require_once 'config/database.php';
+require_once 'models/Barang.php';
 
 class BarangController {
     private $model;
