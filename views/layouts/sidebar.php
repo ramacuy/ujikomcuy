@@ -1,12 +1,18 @@
 <nav id="sidebar">
     <ul class="nav flex-column">
         <li class="nav-item">
-            <a href="index.php?page=supplier" class="nav-link text-white">
+            <a href="index.php?page=home" class="nav-link text-white">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
         </li>
 
 
+        <!-- User Management -->
+        <li class="nav-item">
+            <a href="index.php?page=supplier" class="nav-link text-white">
+                <i class="fas fa-user"></i>supplier
+            </a>
+        </li>
         <!-- User Management -->
         <li class="nav-item">
             <a href="index.php?page=login" class="nav-link text-white">
