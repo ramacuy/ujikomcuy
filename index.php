@@ -21,10 +21,10 @@ $allowedActions = ['index', 'show', 'store', 'update', 'destroy'];
 try {
     if (array_key_exists($page, $controllers)) {
         $controller = $controllers[$page];
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {    
     if (in_array($action, ['store', 'update'])) {
         if ($action === 'update') {
-            $id = $_POST['is_supplier'];
+            $id = $_POST['id_supplier'];
             $controller->$action($id, $_POST);  
         } else {
             $controller->$action($_POST);
