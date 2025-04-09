@@ -14,7 +14,7 @@ $controllers = [
     'supplier' => new SupplierController($db),
     'barang' => new BarangController($db),
     'distribusi' => new DistribusiController($db),
-    'distribusi' => new DashboardModel($db),
+    'home' => new HomeController($db),
 ];
 
 // Ambil parameter halaman dan aksi
