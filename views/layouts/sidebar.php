@@ -24,12 +24,5 @@
                 <i class="fas fa-user"></i> distribusi
             </a>
         </li>
-
-        <!-- Logout -->
-        <li class="nav-item">
-            <a href="logout.php" class="nav-link text-white">
-                <i class="fas fa-sign-out-alt"></i> Sign Out
-            </a>
-        </li>
     </ul>
 </nav>

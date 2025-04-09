@@ -5,6 +5,7 @@ require_once 'config/database.php';
 require_once 'controllers/SupplierController.php';
 require_once 'controllers/BarangController.php';
 require_once 'controllers/DistribusiController.php';
+require_once 'controllers/HomeController.php';
 
 $db = new Database();
 
@@ -13,6 +14,7 @@ $controllers = [
     'supplier' => new SupplierController($db),
     'barang' => new BarangController($db),
     'distribusi' => new DistribusiController($db),
+    'distribusi' => new DashboardModel($db),
 ];
 
 // Ambil parameter halaman dan aksi
