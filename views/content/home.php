@@ -8,7 +8,7 @@
         <div class="col-md-4">
             <div class="card text-white bg-primary mb-3">
                 <div class="card-body">
-<h5 class="card-title">Total Produk</h5>
+<h5 class="card-title">Total Barang</h5>
 <p class="card-text"><?= $jumlahBarang; ?></p>
 
                 </div>
@@ -17,7 +17,7 @@
         <div class="col-md-4">
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Total Pelanggan</h5>
+                    <h5 class="card-title">Total Supplier</h5>
                     <p class="card-text"><?= $jumlahSupplier; ?></p>
                 </div>
             </div>
@@ -25,7 +25,7 @@
         <div class="col-md-4">
             <div class="card text-white bg-warning mb-3">
                 <div class="card-body">
-<h5 class="card-title">Total Penjualan</h5>
+                <h5 class="card-title">Total Distribusi</h5>
 <p class="card-text"><?= $jumlahDistribusi ?></p>
                 </div>
             </div>

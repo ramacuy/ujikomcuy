@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Transaksi Supplier</title>
+    <title>Inventory</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="public/img/gudang.png">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,4 +21,6 @@
             <a class="navbar-brand" href="#">Inventory</a>
         </div>
     </nav>
-    <div class="content" id="mainContent">
+
+    <div class="content" id="mainContent"> 
+        <!-- Konten utama akan dimuat di sini -->
