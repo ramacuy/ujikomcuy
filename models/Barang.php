@@ -5,8 +5,25 @@ require_once 'config/database.php';
 class Barang {
     private $conn;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct() {
+        $db = new Database();
+        $this->conn = $db->connect(); 
+    }
+    
+    public function getTotalBarang() {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM barang");
+        $stmt->execute();
+    }
+
+    public function getAllBarang() {
+        $query = "SELECT * FROM barang";
+        $result = $this->conn->query($query);
+        
+        if ($result) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return [];
+        }
     }
 
     // Ambil semua barang
@@ -28,6 +45,12 @@ class Barang {
         return $result->fetch_assoc();
     }
 
+    public function getAllSupplier() {
+        $query = "SELECT id_supplier, nama FROM supplier";
+        $result = $this->conn->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
     // Validasi supplier_id sebelum menambahkan barang
     private function supplierExists($supplier_id) {
         $query = "SELECT id_supplier FROM supplier WHERE id_supplier = ?";

@@ -9,6 +9,12 @@ class Supplier {
         $database = new Database();
         $this->conn = $database->connect(); 
     }
+
+    public function getTotalSupplier() {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM supplier");
+        $stmt->execute();
+    }
+
     // Ambil semua supplier
     public function getAll() {
         $query = "SELECT * FROM supplier";

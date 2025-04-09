@@ -5,8 +5,15 @@ require_once 'config/database.php';
 class Distribusi {
     private $conn;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct() {
+        $db = new Database();
+        $this->conn = $db->connect(); 
+    }
+    
+
+    public function getTotalDistribusi() {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM distribusi");
+        $stmt->execute();
     }
 
     // Ambil semua data distribusi + relasi barang
@@ -77,7 +84,6 @@ class Distribusi {
         }
     }
     
-
     // Update data distribusi
     public function update($id, $barang_id, $jumlah, $tujuan, $tanggal_distribusi) {
         if (!$this->barangExists($barang_id)) {
@@ -129,7 +135,6 @@ class Distribusi {
             return ["error" => "Gagal menghapus distribusi"];
         }
     }
-    
 }
 
 ?>
