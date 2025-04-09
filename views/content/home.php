@@ -7,7 +7,7 @@
             <div class="card text-white bg-primary mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Total Produk</h5>
-                    <p class="card-text">100</p>
+                    <p class="card-text"><?= $jumlahBarang; ?></p>
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
             <div class="card text-white bg-success mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Total Pelanggan</h5>
-                    <p class="card-text">50</p>
+                    <p class="card-text"><?= $jumlahSupplier; ?></p>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="card text-white bg-warning mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Total Penjualan</h5>
-                    <p class="card-text">200</p>
+                    <p class="card-text"><?= $jumlahDistribusi ?></p>
                 </div>
             </div>
         </div>
