@@ -7,7 +7,7 @@ $details = $details ?? [];
 
 <!-- Distribusi Table -->
     <div class="table-responsive">
-      <table class="table table-bordered table-hover" id="#tabel-detail_distribusi">
+      <table class="table table-bordered table-hover" id="tabel-detail">
             <thead class="table-dark">
                 <tr>
                     <th>No</th>

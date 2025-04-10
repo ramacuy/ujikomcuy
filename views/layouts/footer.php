@@ -1,26 +1,56 @@
 </div>
-  <!-- Footer -->
-  <footer class="footer">
-        <p>&copy; <span id="year"></span> INVENTORY. All rights reserved.</p>
-    </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="public/assets/script.js"></script>
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; <span id="year"></span> INVENTORY. All rights reserved.</p>
+</footer>
 
-    <!-- jQuery -->
+<!-- Script libraries (urutan penting) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 
-<!-- DataTables -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<!-- Script custom -->
+<script src="public/assets/script.js"></script>
 
 <script>
-  $(document).ready(function() {
-    $('#tabel-supplier').DataTable();
-    $('#tabel-barang').DataTable();
-    $('#tabel-distribusi').DataTable();
-  });
+// Inisialisasi tabel DataTables dan footer tahun otomatis
+$(document).ready(function () {
+    // Tabel Supplier
+    $('#tabel-supplier').DataTable({
+        responsive: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50]
+    });
+
+    // Tabel Barang
+    $('#tabel-barang').DataTable({
+        responsive: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50]
+    });
+
+    // Tabel detail
+    $('#tabel-detail').DataTable({
+        responsive: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50]
+    });
+
+    // Tabel Distribusi dengan kolom aksi (terakhir) yang tidak bisa diurutkan
+    $('#tabel-distribusi').DataTable({
+        responsive: true,
+        pageLength: 5,
+        lengthMenu: [5, 10, 25, 50],
+        columnDefs: [
+            { orderable: false, targets: -1 }
+        ]
+    });
+
+    // Update tahun otomatis di footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+});
 </script>
 
 </body>

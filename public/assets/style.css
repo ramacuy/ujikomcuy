@@ -15,7 +15,6 @@ body {
 }
 
 /* Navbar */
-/* Navbar */
 .navbar {
     height: 60px;
     background-color: #008cff;
@@ -47,10 +46,12 @@ body {
     text-decoration: none;
     font-weight: 500;
     margin-left: 15px;
+    transition: background-color 0.3s ease;
 }
 
 .navbar .nav-link:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 /* Sidebar */
@@ -67,8 +68,8 @@ body {
 }
 
 .sidebar-header {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     padding: 0 20px 20px;
     margin-bottom: 10px;
     color: #fff;
@@ -111,7 +112,7 @@ body {
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .table thead {
@@ -127,6 +128,7 @@ body {
 .btn {
     border-radius: 6px;
     font-weight: 500;
+    transition: background-color 0.3s ease;
 }
 
 .btn-primary {
@@ -182,7 +184,7 @@ body {
     width: 100%;
     background: #f8f9fa;
     text-align: center;
-    padding: 10px;
+ padding: 10px;
     font-size: 14px;
     color: #6c757d;
     border-top: 1px solid #dee2e6;
@@ -207,9 +209,9 @@ body {
     }
 }
 
-#searchSupplier {
+/* #searchSupplier {
     max-width: 250px;
     border-radius: 6px;
     border: 1px solid #ced4da;
     padding: 5px 10px;
-}
+} */

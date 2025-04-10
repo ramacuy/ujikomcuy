@@ -61,7 +61,7 @@ class Barang {
             return ["error" => "Supplier tidak ditemukan"];
         }
 
-        $query = "INSERT INTO barang (nama, kategori, stok, supplier_id, created_at) VALUES (?, ?, ?, ?, NOW())";
+        $query = "INSERT INTO barang (nama, kategori, stok, supplier_id, create_at) VALUES (?, ?, ?, ?, NOW())";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("ssii", $nama, $kategori, $stok, $supplier_id);
         

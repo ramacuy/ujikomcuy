@@ -19,7 +19,7 @@ $barang = $barang ?? [];
 
     <!-- Distribusi Table -->
     <div class="table-responsive">
-      <table class="table table-bordered table-hover" id="#tabel-distribusi">
+      <table class="table table-bordered table-hover" id="tabel-distribusi">
             <thead class="table-dark">
                 <tr>
                     <th>No</th>
@@ -103,14 +103,14 @@ $barang = $barang ?? [];
     </div>
 </div>
 
-<!-- Edit & Delete Modals -->
+<!-- konfirmasi & kembalikan Modals -->
 <?php foreach ($distribusi_list as $d) : ?>
-    <!-- Delete Distribusi Modal -->
+    <!-- konfirmasi Distribusi Modal -->
     <div class="modal fade" id="konfirmasi<?= $d['id_distribusi']; ?>" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <h5 class="modal-title">Konfirmasi distribusi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
