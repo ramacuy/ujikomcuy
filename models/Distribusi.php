@@ -83,21 +83,46 @@ class Distribusi {
             return ["error" => "Gagal menambahkan distribusi"];
         }
     }
-    
-    // Update data distribusi
-    public function update($id, $barang_id, $jumlah, $tujuan, $tanggal_distribusi) {
-        if (!$this->barangExists($barang_id)) {
-            return ["error" => "Barang tidak ditemukan"];
-        }
 
-        $query = "UPDATE distribusi SET barang_id = ?, jumlah = ?, tujuan = ?, tanggal_distribusi = ? WHERE id_distribusi = ?";
+    public function konfirmasi($id_distribusi) {
+        // Ambil data distribusi
+        $query = "SELECT d.*, b.harga FROM distribusi d 
+                  JOIN barang b ON d.barang_id = b.id_barang 
+                  WHERE d.id_distribusi = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iissi", $barang_id, $jumlah, $tujuan, $tanggal_distribusi, $id);
-        
-        if ($stmt->execute()) {
-            return ["success" => "Distribusi berhasil diperbarui"];
+        $stmt->bind_param("i", $id_distribusi);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $distribusi = $result->fetch_assoc();
+    
+        if (!$distribusi) {
+            return ["error" => "Distribusi tidak ditemukan"];
+        }
+    
+        // Insert ke detail_distribusi
+        $insert = "INSERT INTO detail_distribusi (distribusi_id, barang_id, jumlah, harga, keterangan) 
+                   VALUES (?, ?, ?, ?, ?)";
+        $stmtInsert = $this->conn->prepare($insert);
+        $keterangan = "Berhasil Terkirim";
+        $stmtInsert->bind_param(
+            "iiids", 
+            $distribusi['id_distribusi'],
+            $distribusi['barang_id'],
+            $distribusi['jumlah'],
+            $distribusi['harga'],
+            $keterangan
+        );
+    
+        if ($stmtInsert->execute()) {
+            // Update status distribusi jadi "Terkonfirmasi"
+            $update = "UPDATE distribusi SET status = 'Terkonfirmasi' WHERE id_distribusi = ?";
+            $stmtUpdate = $this->conn->prepare($update);
+            $stmtUpdate->bind_param("i", $id_distribusi);
+            $stmtUpdate->execute();
+    
+            return ["success" => "Distribusi berhasil dikonfirmasi dan disimpan ke detail distribusi"];
         } else {
-            return ["error" => "Gagal memperbarui distribusi"];
+            return ["error" => "Gagal menyimpan ke detail distribusi"];
         }
     }
 

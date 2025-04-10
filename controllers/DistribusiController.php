@@ -51,27 +51,20 @@ class DistribusiController {
         exit;
     }
 
-    // Update distribusi
-    public function update() {
-        if (isset($_POST['id_distribusi'], $_POST['barang_id'], $_POST['jumlah'], $_POST['tujuan'], $_POST['tanggal_distribusi'])) {
-            $result = $this->distribusiModel->update(
-                $_POST['id_distribusi'],
-                $_POST['barang_id'], 
-                $_POST['jumlah'], 
-                $_POST['tujuan'], 
-                $_POST['tanggal_distribusi']
-            );
-            
+    // Konfirmasi distribusi
+    public function konfirmasi() {
+        if (isset($_POST['id_distribusi'])) {
+            $result = $this->distribusiModel->konfirmasi($_POST['id_distribusi']);
+
             if (isset($result['success'])) {
                 $_SESSION['message'] = $result['success'];
             } else {
-                $_SESSION['message'] = $result['error'] ?? "Terjadi kesalahan";
+                $_SESSION['message'] = $result['error'] ?? "Terjadi kesalahan saat konfirmasi";
             }
         } else {
-            $_SESSION['message'] = "Data tidak lengkap";
+            $_SESSION['message'] = "ID distribusi tidak ditemukan untuk konfirmasi";
         }
-        
-        // Redirect kembali ke halaman distribusi
+
         header("Location: index.php?page=distribusi");
         exit;
     }
