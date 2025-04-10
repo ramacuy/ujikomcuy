@@ -97,7 +97,7 @@ $supplier = $supplier ?? [];
                 </div>
                 <div class="modal-body">
                     <form action="index.php?page=supplier&action=update" method="POST">
-                        <input type="hidden" name="is_supplier" value="<?= $s['id_supplier']; ?>">
+                        <input type="hidden" name="id_supplier" value="<?= $s['id_supplier']; ?>">
                         <div class="mb-3">
                             <label class="form-label">Nama Supplier</label>
                             <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($s['nama'], ENT_QUOTES, 'UTF-8'); ?>" required>
