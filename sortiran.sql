@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Apr 2025 pada 12.50
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: Apr 10, 2025 at 05:19 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang`
+-- Table structure for table `barang`
 --
 
 CREATE TABLE `barang` (
@@ -38,20 +38,20 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `barang`
+-- Dumping data for table `barang`
 --
 
 INSERT INTO `barang` (`id_barang`, `nama`, `kategori`, `stok`, `supplier_id`, `harga`, `create_at`) VALUES
-(1, 'Roti', 'makanan', 100, 1, 10000.00, '2025-04-10 10:03:22'),
-(2, 'Susu', 'minuman', 200, 2, NULL, '2025-04-10 10:03:22'),
+(1, 'Roti', 'makanan', 40, 1, 10000.00, '2025-04-10 10:03:22'),
+(2, 'Susu', 'minuman', 100, 2, NULL, '2025-04-10 10:03:22'),
 (3, 'Biskuit', 'makanan', 150, 3, NULL, '2025-04-10 10:03:22'),
-(4, 'Teh Botol', 'minuman', 180, 1, NULL, '2025-04-10 10:03:22'),
-(5, 'Kopi', 'minuman', 120, 2, NULL, '2025-04-10 10:03:22');
+(4, 'Teh Botol', 'minuman', 170, 1, NULL, '2025-04-10 10:03:22'),
+(5, 'Kopi', 'minuman', 180, 2, NULL, '2025-04-10 10:03:22');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `detail_distribusi`
+-- Table structure for table `detail_distribusi`
 --
 
 CREATE TABLE `detail_distribusi` (
@@ -60,13 +60,25 @@ CREATE TABLE `detail_distribusi` (
   `barang_id` int(11) DEFAULT NULL,
   `jumlah` int(11) DEFAULT NULL,
   `harga` decimal(12,2) DEFAULT NULL,
+  `tujuan` varchar(50) DEFAULT NULL,
+  `tanggal_distribusi` date DEFAULT NULL,
   `keterangan` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `detail_distribusi`
+--
+
+INSERT INTO `detail_distribusi` (`id_detail_distribusi`, `distribusi_id`, `barang_id`, `jumlah`, `harga`, `tujuan`, `tanggal_distribusi`, `keterangan`) VALUES
+(10, NULL, 1, 20, 10000.00, NULL, NULL, 'Berhasil Terkirim'),
+(11, NULL, 1, 10, 10000.00, NULL, NULL, 'Berhasil Terkirim'),
+(12, NULL, 1, 30, 10000.00, 'RUmah', '2025-04-10', NULL),
+(13, NULL, 2, 100, NULL, 'Patak', '2025-04-10', 'Berhasil Terkirim');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `distribusi`
+-- Table structure for table `distribusi`
 --
 
 CREATE TABLE `distribusi` (
@@ -80,20 +92,16 @@ CREATE TABLE `distribusi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `distribusi`
+-- Dumping data for table `distribusi`
 --
 
 INSERT INTO `distribusi` (`id_distribusi`, `barang_id`, `jumlah`, `tujuan`, `tanggal_distribusi`, `harga`, `created_at`) VALUES
-(1, 1, 50, 'Toko A', '2025-04-02', NULL, '2025-04-02 03:00:52'),
-(2, 2, 100, 'Toko B', '2025-04-03', NULL, '2025-04-02 03:00:52'),
-(3, 3, 75, 'Gudang C', '2025-04-04', NULL, '2025-04-02 03:00:52'),
-(4, 4, 90, 'Restoran D', '2025-04-05', NULL, '2025-04-02 03:00:52'),
-(5, 5, 60, 'Cafe E', '2025-04-06', NULL, '2025-04-02 03:00:52');
+(11, 4, 10, 'Restoran C', '2025-04-10', NULL, '2025-04-10 14:46:16');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `supplier`
+-- Table structure for table `supplier`
 --
 
 CREATE TABLE `supplier` (
@@ -105,7 +113,7 @@ CREATE TABLE `supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `supplier`
+-- Dumping data for table `supplier`
 --
 
 INSERT INTO `supplier` (`id_supplier`, `nama`, `kontak`, `alamat`, `created_at`) VALUES
@@ -116,7 +124,7 @@ INSERT INTO `supplier` (`id_supplier`, `nama`, `kontak`, `alamat`, `created_at`)
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -132,14 +140,14 @@ CREATE TABLE `users` (
 --
 
 --
--- Indeks untuk tabel `barang`
+-- Indexes for table `barang`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`),
   ADD KEY `supplier_id` (`supplier_id`);
 
 --
--- Indeks untuk tabel `detail_distribusi`
+-- Indexes for table `detail_distribusi`
 --
 ALTER TABLE `detail_distribusi`
   ADD PRIMARY KEY (`id_detail_distribusi`),
@@ -147,78 +155,78 @@ ALTER TABLE `detail_distribusi`
   ADD KEY `barang_id` (`barang_id`);
 
 --
--- Indeks untuk tabel `distribusi`
+-- Indexes for table `distribusi`
 --
 ALTER TABLE `distribusi`
   ADD PRIMARY KEY (`id_distribusi`),
   ADD KEY `barang_id` (`barang_id`);
 
 --
--- Indeks untuk tabel `supplier`
+-- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id_supplier`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `barang`
+-- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `detail_distribusi`
+-- AUTO_INCREMENT for table `detail_distribusi`
 --
 ALTER TABLE `detail_distribusi`
-  MODIFY `id_detail_distribusi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_distribusi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `distribusi`
+-- AUTO_INCREMENT for table `distribusi`
 --
 ALTER TABLE `distribusi`
-  MODIFY `id_distribusi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_distribusi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `supplier`
+-- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
   MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id_user` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `barang`
+-- Constraints for table `barang`
 --
 ALTER TABLE `barang`
   ADD CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id_supplier`) ON DELETE SET NULL;
 
 --
--- Ketidakleluasaan untuk tabel `detail_distribusi`
+-- Constraints for table `detail_distribusi`
 --
 ALTER TABLE `detail_distribusi`
-  ADD CONSTRAINT `detail_distribusi_ibfk_1` FOREIGN KEY (`distribusi_id`) REFERENCES `distribusi` (`id_distribusi`),
-  ADD CONSTRAINT `detail_distribusi_ibfk_2` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`);
+  ADD CONSTRAINT `detail_distribusi_ibfk_2` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`),
+  ADD CONSTRAINT `fk_distribusi` FOREIGN KEY (`distribusi_id`) REFERENCES `distribusi` (`id_distribusi`) ON DELETE SET NULL;
 
 --
--- Ketidakleluasaan untuk tabel `distribusi`
+-- Constraints for table `distribusi`
 --
 ALTER TABLE `distribusi`
   ADD CONSTRAINT `distribusi_ibfk_1` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id_barang`) ON DELETE CASCADE;
