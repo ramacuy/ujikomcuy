@@ -15,6 +15,7 @@ $details = $details ?? [];
                     <th>Jumlah</th>
                     <th>Tujuan</th>
                     <th>Tanggal Distribusi</th>
+                    <th>SubTotal</th>
                     <th>keterangan</th>
                 </tr>
             </thead>
@@ -27,6 +28,7 @@ $details = $details ?? [];
                             <td><?= htmlspecialchars($d['jumlah'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($d['tanggal_distribusi'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td>Rp <?= number_format((float)($d['harga'] ?? 0), 0, ',', '.'); ?></td>
                             <td><?= htmlspecialchars($d['keterangan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                         </tr>
                     <?php endforeach; ?>

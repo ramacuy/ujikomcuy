@@ -27,6 +27,7 @@ $supplier = $supplier ?? [];
                     <th>Kategori</th>
                     <th>Stok</th>
                     <th>Supplier</th>
+                    <th>Harga/Pcs</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@ $supplier = $supplier ?? [];
                             <td><?= htmlspecialchars($b['kategori'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($b['stok'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($b['supplier'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td>Rp <?= number_format((float)($b['harga'] ?? 0), 0, ',', '.'); ?></td>
                             <td>
                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $b['id_barang']; ?>">
                                     Edit
@@ -75,11 +77,19 @@ $supplier = $supplier ?? [];
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Kategori</label>
-                        <input type="text" name="kategori" class="form-control" required>
+                        <select name="kategori" class="form-control" required>
+                        <option value="" disabled selected>Pilih Jenis</option>
+                        <option value="Makanan">Makanan</option>
+                        <option value="Minuman">Minuman</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Stok</label>
                         <input type="number" name="stok" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Harga</label>
+                        <input type="number" name="harga" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Supplier</label>

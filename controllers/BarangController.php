@@ -28,8 +28,8 @@ class BarangController {
 
     // Tambah barang baru
     public function store($data) {
-        if (isset($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'])) {
-            $this->barangModel->create($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id']);
+        if (isset($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'], $data['harga'])) {
+            $this->barangModel->create($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'], $data['harga']);
         }
         header("Location: index.php?page=barang");
         exit();
@@ -37,8 +37,8 @@ class BarangController {
 
     // Update barang
     public function update($id, $data) {
-        if (isset($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'])) {
-            $this->barangModel->update($id, $data['nama'], $data['kategori'], $data['stok'], $data['supplier_id']);
+        if (isset($data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'], $data['harga'])) {
+            $this->barangModel->update($id, $data['nama'], $data['kategori'], $data['stok'], $data['supplier_id'], $data['harga']);
         }
         header("Location: index.php?page=barang");
         exit();

@@ -27,6 +27,7 @@ $barang = $barang ?? [];
                     <th>Jumlah</th>
                     <th>Tujuan</th>
                     <th>Tanggal Distribusi</th>
+                    <th>SubTotal</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@ $barang = $barang ?? [];
                             <td><?= htmlspecialchars($d['jumlah'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($d['tanggal_distribusi'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td>Rp <?= number_format((float)($d['total_harga'] ?? 0), 0, ',', '.'); ?></td>
                             <td>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#konfirmasi<?= $d['id_distribusi']; ?>">
                                     konfirmasi
@@ -95,6 +97,10 @@ $barang = $barang ?? [];
                     <div class="mb-3">
                         <label class="form-label">Tanggal Distribusi</label>
                         <input type="date" name="tanggal_distribusi" class="form-control" value="<?= date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Harga Total</label>
+                        <input type="text" id="harga_total" class="form-control" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>

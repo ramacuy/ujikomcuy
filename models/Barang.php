@@ -23,7 +23,7 @@ class Barang {
 
     // Ambil semua barang
     public function getAll() {
-        $query = "SELECT b.id_barang, b.nama, b.kategori, b.stok, s.nama AS supplier 
+        $query = "SELECT b.id_barang, b.nama, b.kategori, b.stok, b.harga, s.nama AS supplier 
                   FROM barang b 
                   JOIN supplier s ON b.supplier_id = s.id_supplier";
         $result = $this->conn->query($query);
@@ -56,14 +56,14 @@ class Barang {
     }
 
     // Tambah barang baru (harus memiliki supplier_id yang valid)
-    public function create($nama, $kategori, $stok, $supplier_id) {
+    public function create($nama, $kategori, $stok, $supplier_id, $harga) {
         if (!$this->supplierExists($supplier_id)) {
             return ["error" => "Supplier tidak ditemukan"];
         }
 
-        $query = "INSERT INTO barang (nama, kategori, stok, supplier_id, create_at) VALUES (?, ?, ?, ?, NOW())";
+        $query = "INSERT INTO barang (nama, kategori, stok, supplier_id, harga, create_at) VALUES (?, ?, ?, ?, ?, NOW())";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssii", $nama, $kategori, $stok, $supplier_id);
+        $stmt->bind_param("ssiis", $nama, $kategori, $stok, $supplier_id, $harga);
         
         if ($stmt->execute()) {
             return ["success" => "Barang berhasil ditambahkan"];
@@ -73,14 +73,14 @@ class Barang {
     }
 
     // Update barang
-    public function update($id, $nama, $kategori, $stok, $supplier_id) {
+    public function update($id, $nama, $kategori, $stok, $supplier_id, $harga) {
         if (!$this->supplierExists($supplier_id)) {
             return ["error" => "Supplier tidak ditemukan"];
         }
 
-        $query = "UPDATE barang SET nama = ?, kategori = ?, stok = ?, supplier_id = ? WHERE id_barang = ?";
+        $query = "UPDATE barang SET nama = ?, kategori = ?, stok = ?, supplier_id = ?, harga = ?, WHERE id_barang = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ssiii", $nama, $kategori, $stok, $supplier_id, $id);
+        $stmt->bind_param("ssiisi", $nama, $kategori, $stok, $supplier_id, $harga, $id);
         
         if ($stmt->execute()) {
             return ["success" => "Barang berhasil diperbarui"];

@@ -12,12 +12,14 @@ class Distribusi {
     
     // Ambil semua data distribusi + relasi barang
     public function getAll() {
-        $query = "SELECT d.id_distribusi, d.barang_id, b.nama AS nama_barang, d.jumlah, d.tujuan, d.tanggal_distribusi 
-                  FROM distribusi d
-                  JOIN barang b ON d.barang_id = b.id_barang";
+        $query = "SELECT d.id_distribusi, d.barang_id, b.nama AS nama_barang, b.harga AS harga_satuan, d.jumlah, d.tujuan, 
+        d.tanggal_distribusi, (b.harga * d.jumlah) AS total_harga FROM distribusi d 
+        JOIN barang b ON d.barang_id = b.id_barang";
         $result = $this->conn->query($query);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+    
 
     // Ambil distribusi berdasarkan ID
     public function getById($id) {
@@ -44,8 +46,8 @@ class Distribusi {
             return ["error" => "Barang tidak ditemukan"];
         }
     
-        // Ambil stok barang dulu
-        $stokQuery = "SELECT stok FROM barang WHERE id_barang = ?";
+        // Ambil stok dan harga barang
+        $stokQuery = "SELECT stok, harga FROM barang WHERE id_barang = ?";
         $stokStmt = $this->conn->prepare($stokQuery);
         $stokStmt->bind_param("i", $barang_id);
         $stokStmt->execute();
@@ -60,11 +62,14 @@ class Distribusi {
             return ["error" => "Stok tidak mencukupi"];
         }
     
-        // Simpan distribusi
-        $query = "INSERT INTO distribusi (barang_id, jumlah, tujuan, tanggal_distribusi) VALUES (?, ?, ?, ?)";
+        $harga_satuan = $barang['harga'];
+        $harga_total = $harga_satuan * $jumlah;
+    
+        // Simpan distribusi (tambahkan harga jika kamu mau simpan langsung)
+        $query = "INSERT INTO distribusi (barang_id, jumlah, tujuan, tanggal_distribusi, harga) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiss", $barang_id, $jumlah, $tujuan, $tanggal_distribusi);
-        
+        $stmt->bind_param("iissd", $barang_id, $jumlah, $tujuan, $tanggal_distribusi, $harga_total);
+    
         if ($stmt->execute()) {
             // Kurangi stok barang
             $updateStokQuery = "UPDATE barang SET stok = stok - ? WHERE id_barang = ?";
@@ -76,7 +81,7 @@ class Distribusi {
         } else {
             return ["error" => "Gagal menambahkan distribusi"];
         }
-    }
+    }    
 
     public function konfirmasi($id_distribusi) {
         // Ambil data distribusi
@@ -93,25 +98,27 @@ class Distribusi {
             return ["error" => "Distribusi tidak ditemukan"];
         }
     
+        // Hitung total harga
+        $total_harga = $distribusi['harga'] * $distribusi['jumlah'];
+    
         // Insert ke detail_distribusi
         $insert = "INSERT INTO detail_distribusi (distribusi_id, barang_id, jumlah, harga, tujuan, tanggal_distribusi, keterangan) 
-           VALUES (?, ?, ?, ?, ?, ?, ?)";
+                   VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmtInsert = $this->conn->prepare($insert);
         $keterangan = "Berhasil Terkirim";
         $stmtInsert->bind_param(
             "iiidsss", 
-        $distribusi['id_distribusi'],
-        $distribusi['barang_id'],
-        $distribusi['jumlah'],
-        $distribusi['harga'],
-        $distribusi['tujuan'],
-        $distribusi['tanggal_distribusi'],
-        $keterangan
-    );
-
+            $distribusi['id_distribusi'],
+            $distribusi['barang_id'],
+            $distribusi['jumlah'],
+            $total_harga, // ← harga total hasil kali
+            $distribusi['tujuan'],
+            $distribusi['tanggal_distribusi'],
+            $keterangan
+        );
     
         if ($stmtInsert->execute()) {
-            // Setelah berhasil insert ke detail_distribusi, hapus dari distribusi
+            // Hapus dari distribusi
             $delete = "DELETE FROM distribusi WHERE id_distribusi = ?";
             $stmtDelete = $this->conn->prepare($delete);
             $stmtDelete->bind_param("i", $id_distribusi);
@@ -121,7 +128,7 @@ class Distribusi {
         } else {
             return ["error" => "Gagal menyimpan ke detail distribusi: " . $stmtInsert->error];
         }
-    }        
+    }            
     
     // Hapus distribusi
     public function delete($id) {
