@@ -25,7 +25,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="index.php?page=distribusi" class="nav-link text-white">
+            <a href="index.php?page=detail_distribusi" class="nav-link text-white">
                 <i class="fas fa-user"></i> Detail Distribusi
             </a>
         </li>

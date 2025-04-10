@@ -5,6 +5,7 @@
     require_once 'controllers/SupplierController.php';
     require_once 'controllers/BarangController.php';
     require_once 'controllers/DistribusiController.php';
+    require_once 'controllers/DetailDistribusiController.php';
     require_once 'controllers/HomeController.php';
 
     $db = new Database();
@@ -13,6 +14,7 @@
     $controllers = [
         'supplier' => new SupplierController($db),
         'barang' => new BarangController($db),
+        'detail_distribusi' => new DetailDistribusiController($db),
         'distribusi' => new DistribusiController($db),
         'home' => new HomeController($db),
     ];

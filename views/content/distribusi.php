@@ -19,7 +19,7 @@ $barang = $barang ?? [];
 
     <!-- Distribusi Table -->
     <div class="table-responsive">
-      <table class="table table-bordered table-hover" id="tabel-distribusi">
+      <table class="table table-bordered table-hover" id="#tabel-distribusi">
             <thead class="table-dark">
                 <tr>
                     <th>No</th>
@@ -114,7 +114,7 @@ $barang = $barang ?? [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>konformasi distrbusi<strong><?= htmlspecialchars($d['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong> ke <strong><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
+                    <p>konfirmasi distribusi <strong><?= htmlspecialchars($d['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong> ke <strong><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
                     <p class="text-warning">Stok barang akan dikirim <?= htmlspecialchars($d['jumlah'] ?? '', ENT_QUOTES, 'UTF-8'); ?> unit.</p>
                 </div>
                 <div class="modal-footer">
