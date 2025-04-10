@@ -10,12 +10,6 @@ class Distribusi {
         $this->conn = $db->connect(); 
     }
     
-
-    public function getTotalDistribusi() {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM distribusi");
-        $stmt->execute();
-    }
-
     // Ambil semua data distribusi + relasi barang
     public function getAll() {
         $query = "SELECT d.id_distribusi, d.barang_id, b.nama AS nama_barang, d.jumlah, d.tujuan, d.tanggal_distribusi 
@@ -100,32 +94,35 @@ class Distribusi {
         }
     
         // Insert ke detail_distribusi
-        $insert = "INSERT INTO detail_distribusi (distribusi_id, barang_id, jumlah, harga, keterangan) 
-                   VALUES (?, ?, ?, ?, ?)";
+        $insert = "INSERT INTO detail_distribusi (distribusi_id, barang_id, jumlah, harga, tujuan, tanggal_distribusi, keterangan) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmtInsert = $this->conn->prepare($insert);
         $keterangan = "Berhasil Terkirim";
         $stmtInsert->bind_param(
-            "iiids", 
-            $distribusi['id_distribusi'],
-            $distribusi['barang_id'],
-            $distribusi['jumlah'],
-            $distribusi['harga'],
-            $keterangan
-        );
+            "iiidsss", 
+        $distribusi['id_distribusi'],
+        $distribusi['barang_id'],
+        $distribusi['jumlah'],
+        $distribusi['harga'],
+        $distribusi['tujuan'],
+        $distribusi['tanggal_distribusi'],
+        $keterangan
+    );
+
     
         if ($stmtInsert->execute()) {
-            // Update status distribusi jadi "Terkonfirmasi"
-            $update = "UPDATE distribusi SET status = 'Terkonfirmasi' WHERE id_distribusi = ?";
-            $stmtUpdate = $this->conn->prepare($update);
-            $stmtUpdate->bind_param("i", $id_distribusi);
-            $stmtUpdate->execute();
+            // Setelah berhasil insert ke detail_distribusi, hapus dari distribusi
+            $delete = "DELETE FROM distribusi WHERE id_distribusi = ?";
+            $stmtDelete = $this->conn->prepare($delete);
+            $stmtDelete->bind_param("i", $id_distribusi);
+            $stmtDelete->execute();
     
-            return ["success" => "Distribusi berhasil dikonfirmasi dan disimpan ke detail distribusi"];
+            return ["success" => "Distribusi berhasil dikonfirmasi, dipindah, dan dihapus"];
         } else {
-            return ["error" => "Gagal menyimpan ke detail distribusi"];
+            return ["error" => "Gagal menyimpan ke detail distribusi: " . $stmtInsert->error];
         }
-    }
-
+    }        
+    
     // Hapus distribusi
     public function delete($id) {
         // Ambil data distribusi dulu (untuk tahu barang_id dan jumlah)

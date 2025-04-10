@@ -10,11 +10,6 @@ class Barang {
         $this->conn = $db->connect(); 
     }
     
-    public function getTotalBarang() {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) as total FROM barang");
-        $stmt->execute();
-    }
-
     public function getAllBarang() {
         $query = "SELECT * FROM barang";
         $result = $this->conn->query($query);

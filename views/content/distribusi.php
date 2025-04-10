@@ -40,11 +40,11 @@ $barang = $barang ?? [];
                             <td><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td><?= htmlspecialchars($d['tanggal_distribusi'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $d['id_distribusi']; ?>">
-                                    Edit
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#konfirmasi<?= $d['id_distribusi']; ?>">
+                                    konfirmasi
                                 </button>
-                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $d['id_distribusi']; ?>">
-                                    Hapus
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $d['id_distribusi']; ?>">
+                                    kembalikan
                                 </button>
                             </td>
                         </tr>
@@ -105,50 +105,8 @@ $barang = $barang ?? [];
 
 <!-- Edit & Delete Modals -->
 <?php foreach ($distribusi_list as $d) : ?>
-    <!-- Edit Distribusi Modal -->
-    <div class="modal fade" id="modalEdit<?= $d['id_distribusi']; ?>" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Distribusi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="index.php?page=distribusi&action=update" method="POST">
-                        <input type="hidden" name="id_distribusi" value="<?= $d['id_distribusi']; ?>">
-                        <div class="mb-3">
-                            <label class="form-label">Barang</label>
-                            <select name="barang_id" class="form-control" required>
-                                <option value="">Pilih Barang</option>
-                                <?php foreach ($barang as $b) : ?>
-                                    <?php if (!isset($b['id_barang'], $b['nama'], $b['stok'])) continue; ?>
-                                    <option value="<?= $b['id_barang']; ?>" <?= (isset($d['barang_id']) && $b['id_barang'] == $d['barang_id']) ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($b['nama'], ENT_QUOTES, 'UTF-8'); ?> (Stok: <?= $b['stok']; ?>)
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Jumlah</label>
-                            <input type="number" name="jumlah" class="form-control" min="1" value="<?= htmlspecialchars($d['jumlah'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tujuan</label>
-                            <input type="text" name="tujuan" class="form-control" value="<?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tanggal Distribusi</label>
-                            <input type="date" name="tanggal_distribusi" class="form-control" value="<?= htmlspecialchars($d['tanggal_distribusi'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Delete Distribusi Modal -->
-    <div class="modal fade" id="modalHapus<?= $d['id_distribusi']; ?>" tabindex="-1">
+    <div class="modal fade" id="konfirmasi<?= $d['id_distribusi']; ?>" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -156,14 +114,35 @@ $barang = $barang ?? [];
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Yakin ingin menghapus distribusi <strong><?= htmlspecialchars($d['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong> ke <strong><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
+                    <p>konformasi distrbusi<strong><?= htmlspecialchars($d['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong> ke <strong><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
+                    <p class="text-warning">Stok barang akan dikirim <?= htmlspecialchars($d['jumlah'] ?? '', ENT_QUOTES, 'UTF-8'); ?> unit.</p>
+                </div>
+                <div class="modal-footer">
+                <form action="index.php?page=distribusi&action=konfirmasi" method="POST">
+                    <input type="hidden" name="id_distribusi" value="<?= $d['id_distribusi']; ?>">
+                    <button type="submit" class="btn btn-success btn-sm">Konfirmasi</button>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Distribusi Modal -->
+    <div class="modal fade" id="modalHapus<?= $d['id_distribusi']; ?>" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi pengembalian</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Yakin ingin mengembalikan distribusi <strong><?= htmlspecialchars($d['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong> ke <strong><?= htmlspecialchars($d['tujuan'] ?? '', ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
                     <p class="text-warning">Stok barang akan dikembalikan sebanyak <?= htmlspecialchars($d['jumlah'] ?? '', ENT_QUOTES, 'UTF-8'); ?> unit.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <form action="index.php?page=distribusi&action=destroy" method="POST">
                         <input type="hidden" name="id_distribusi" value="<?= $d['id_distribusi']; ?>">
-                        <button type="submit" class="btn btn-danger">Hapus</button>
+                        <button type="submit" class="btn btn-danger">kembalikan</button>
                     </form>
                 </div>
             </div>

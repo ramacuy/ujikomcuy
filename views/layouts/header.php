@@ -14,13 +14,24 @@
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
+   <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid justify-content-between">
+        <!-- Kiri: Toggle + Inventory -->
+        <div class="d-flex align-items-center">
             <button class="btn btn-outline-light me-2" id="toggleSidebar">☰</button>
-            <a class="navbar-brand" href="#">Inventory</a>
+            <a class="navbar-brand mb-0 h1" href="#">Inventory</a>
         </div>
-    </nav>
+
+        <!-- Kanan: Sapaan Admin -->
+        <div class="d-flex align-items-center">
+            <span class="text-white me-3">Hi, Admin</span>
+            <!-- Jika ingin dropdown nanti bisa ditambahkan di sini -->
+        </div>
+    </div>
+</nav>
+
+
 
     <div class="content" id="mainContent"> 
         <!-- Konten utama akan dimuat di sini -->

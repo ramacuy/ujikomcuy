@@ -10,18 +10,23 @@
         <!-- User Management -->
         <li class="nav-item">
             <a href="index.php?page=supplier" class="nav-link text-white">
-                <i class="fas fa-user"></i>supplier
+                <i class="fas fa-user"></i>Supplier
             </a>
         </li>
         <!-- User Management -->
         <li class="nav-item">
             <a href="index.php?page=barang" class="nav-link text-white">
-                <i class="fas fa-user"></i> barang
+                <i class="fas fa-user"></i>Barang
             </a>
         </li>
         <li class="nav-item">
             <a href="index.php?page=distribusi" class="nav-link text-white">
-                <i class="fas fa-user"></i> distribusi
+                <i class="fas fa-user"></i> Distribusi
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="index.php?page=distribusi" class="nav-link text-white">
+                <i class="fas fa-user"></i> Detail Distribusi
             </a>
         </li>
     </ul>

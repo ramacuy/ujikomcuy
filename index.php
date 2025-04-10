@@ -52,6 +52,9 @@
                     case 'destroy':
                         $controller->destroy($_POST[$idField] ?? null);
                         break;
+                    case 'konfirmasi':
+                        $controller->konfirmasi($_POST);
+                        break;
                     default:
                         throw new Exception("Aksi POST tidak valid!");
                 }

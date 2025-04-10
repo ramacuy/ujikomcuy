@@ -1,23 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let sidebar = document.getElementById("sidebar");
-    let content = document.querySelector(".content");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.querySelector(".content");
+    const toggle = document.getElementById("toggleSidebar");
 
-    if (sidebar.classList.contains("hide")) {
-        content.classList.add("full-width");
-    } else {
-        content.classList.remove("full-width");
+    if (sidebar && toggle) {
+        toggle.addEventListener("click", () => {
+            sidebar.classList.toggle("hide");
+            content.classList.toggle("full-width");
+        });
     }
 
-    document.getElementById("toggleSidebar").addEventListener("click", function () {
-        sidebar.classList.toggle("hide");
-
-        if (sidebar.classList.contains("hide")) {
-            content.classList.add("full-width");
-        } else {
-            content.classList.remove("full-width");
-        }
-    });
-    
+    // Aktifkan link sidebar
     let links = document.querySelectorAll("#sidebar .nav-link");
     links.forEach(link => {
         link.addEventListener("click", function () {
@@ -25,4 +18,18 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.add("active");
         });
     });
+
+    // Live search di supplier
+    const searchInput = document.getElementById("searchSupplier");
+    const tableRows = document.querySelectorAll("#tabel-supplier tbody tr");
+
+    if (searchInput) {
+        searchInput.addEventListener("keyup", function () {
+            const keyword = this.value.toLowerCase();
+            tableRows.forEach(row => {
+                const nama = row.querySelector(".supplier-nama").textContent.toLowerCase();
+                row.style.display = nama.includes(keyword) ? "" : "none";
+            });
+        });
+    }
 });
