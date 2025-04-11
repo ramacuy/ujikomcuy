@@ -1,5 +1,4 @@
 <?php
-
 require_once 'config/database.php';
 
 class User {
@@ -7,20 +6,18 @@ class User {
 
     public function __construct() {
         $database = new Database();
-        $this->conn = $database->connect(); // koneksi mysqli
+        $this->conn = $database->connect();
     }
 
     public function login($username, $password) {
-        $username = mysqli_real_escape_string($this->conn, $username);
-        $password = md5($password); // hash password pakai md5
+        $password = md5($password); // Gunakan MD5 sesuai struktur awal
 
-        $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
-        $result = mysqli_query($this->conn, $query);
+        // ✅ Pastikan nama tabel adalah `user`, bukan `users`
+        $stmt = $this->conn->prepare("SELECT * FROM usersgir WHERE username = ? AND password = ?");
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            return mysqli_fetch_assoc($result); // login berhasil
-        }
-
-        return false; // login gagal
+        return ($result->num_rows > 0) ? $result->fetch_assoc() : false;
     }
 }
