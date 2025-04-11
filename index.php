@@ -22,7 +22,7 @@
     // Ambil parameter halaman dan aksi
     $page = htmlspecialchars($_GET['page'] ?? 'home', ENT_QUOTES, 'UTF-8');
     $action = htmlspecialchars($_GET['action'] ?? 'index', ENT_QUOTES, 'UTF-8');
-    $allowedActions = ['index', 'show', 'store', 'update', 'destroy', 'konfirmasi'];
+    $allowedActions = ['index', 'show', 'store', 'update', 'destroy', 'create'];
 
     // Layout header dan sidebar
     require_once 'views/layouts/header.php';
@@ -54,8 +54,8 @@
                     case 'destroy':
                         $controller->destroy($_POST[$idField] ?? null);
                         break;
-                    case 'konfirmasi':
-                        $controller->konfirmasi($_POST);
+                    case 'create':
+                        $controller->create($_POST);
                         break;
                     default:
                         throw new Exception("Aksi POST tidak valid!");

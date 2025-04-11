@@ -1,5 +1,4 @@
 <?php
-
 require_once 'config/database.php';
 require_once 'models/Penjualan.php';
 
@@ -11,30 +10,39 @@ class PenjualanController {
     }
 
     public function index() {
-        $penjualan = $this->model->all();
+        $penjualan = $this->model->getAll();
         $pelangganList = $this->model->getPelangganList();
         $produkList = $this->model->getProdukList();
 
         include 'views/content/penjualan.php';
     }
 
-    public function create() {
-        if (isset($_POST['PelangganID'], $_POST['tanggal_penjualan'], $_POST['ProdukID'], $_POST['JumlahProduk'], $_POST['Harga'])) {
+    public function store($data = null) {
+        $data = $data ?? $_POST;
+
+        if (isset($data['PelangganID'], $data['tanggal_penjualan'], $data['ProdukID'], $data['JumlahProduk'], $data['Harga'])) {
             $produkList = [];
 
-            foreach ($_POST['ProdukID'] as $i => $produkID) {
-                $jumlah = (int) $_POST['JumlahProduk'][$i];
-                $harga = (float) $_POST['Harga'][$i];
-                $produkList[] = [
-                    'ProdukID' => $produkID,
-                    'JumlahProduk' => $jumlah,
-                    'subtotal' => $jumlah * $harga
-                ];
+            foreach ($data['ProdukID'] as $i => $produkID) {
+                $jumlah = (int) $data['JumlahProduk'][$i];
+                $harga = (float) $data['Harga'][$i];
+
+                // Validasi jumlah > 0
+                if ($jumlah > 0 && $harga >= 0) {
+                    $produkList[] = [
+                        'ProdukID' => $produkID,
+                        'JumlahProduk' => $jumlah,
+                        'subtotal' => $jumlah * $harga
+                    ];
+                }
             }
 
-            $success = $this->model->create($_POST['PelangganID'], $_POST['tanggal_penjualan'], $produkList);
-
-            $_SESSION['message'] = $success ? "Penjualan berhasil ditambahkan" : "Gagal menambahkan penjualan";
+            if (empty($produkList)) {
+                $_SESSION['message'] = "Tidak ada produk yang valid ditambahkan.";
+            } else {
+                $success = $this->model->create($data['PelangganID'], $data['tanggal_penjualan'], $produkList);
+                $_SESSION['message'] = $success ? "Penjualan berhasil ditambahkan" : ($_SESSION['message'] ?? "Gagal menambahkan penjualan");
+            }
         } else {
             $_SESSION['message'] = "Data tidak lengkap";
         }

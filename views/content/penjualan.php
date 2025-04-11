@@ -21,7 +21,6 @@ $produkList = $produkList ?? [];
                     <th>Tanggal</th>
                     <th>Total Harga</th>
                     <th>Pelanggan</th>
-                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,9 +30,6 @@ $produkList = $produkList ?? [];
                         <td><?= htmlspecialchars($p['TanggalPenjualan']); ?></td>
                         <td>Rp <?= number_format($p['TotalHarga'], 0, ',', '.'); ?></td>
                         <td><?= htmlspecialchars($p['NamaPelanggan']); ?></td>
-                        <td>
-                            <a href="index.php?page=detail_penjualan&id=<?= $p['PenjualanID']; ?>" class="btn btn-sm btn-info">Detail</a>
-                        </td>
                     </tr>
                 <?php endforeach; else: ?>
                     <tr><td colspan="5" class="text-center">Tidak ada data penjualan</td></tr>
@@ -47,7 +43,8 @@ $produkList = $produkList ?? [];
 <div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form action="index.php?page=penjualan&action=create" method="POST">
+        <form action="index.php?page=penjualan&action=store" method="POST">
+
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Penjualan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
