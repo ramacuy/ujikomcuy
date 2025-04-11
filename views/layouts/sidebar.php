@@ -5,28 +5,31 @@
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
         </li>
-
-
         <!-- User Management -->
         <li class="nav-item">
-            <a href="index.php?page=supplier" class="nav-link text-white">
-                <i class="fas fa-user"></i>Supplier
+            <a href="index.php?page=pelanggan" class="nav-link text-white">
+                <i class="fas fa-user"></i>Pelanggan
             </a>
         </li>
         <!-- User Management -->
         <li class="nav-item">
-            <a href="index.php?page=barang" class="nav-link text-white">
-                <i class="fas fa-user"></i>Barang
+            <a href="index.php?page=produk" class="nav-link text-white">
+                <i class="fas fa-user"></i>produk
             </a>
         </li>
         <li class="nav-item">
-            <a href="index.php?page=distribusi" class="nav-link text-white">
-                <i class="fas fa-user"></i> Distribusi
+            <a href="index.php?page=penjualan" class="nav-link text-white">
+                <i class="fas fa-user"></i> penjualan
             </a>
         </li>
         <li class="nav-item">
-            <a href="index.php?page=detail_distribusi" class="nav-link text-white">
-                <i class="fas fa-user"></i> Detail Distribusi
+            <a href="index.php?page=detail_penjualan" class="nav-link text-white">
+                <i class="fas fa-user"></i> detail
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="index.php?page=logout" class="nav-link text-white">
+                <i class="fas fa-user"></i> Logout
             </a>
         </li>
     </ul>

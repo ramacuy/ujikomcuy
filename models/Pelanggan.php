@@ -2,7 +2,7 @@
 
 require_once 'config/database.php';
 
-class Supplier {
+class Pelanggan {
     private $conn;
 
     public function __construct() {
@@ -12,33 +12,33 @@ class Supplier {
 
     // Ambil semua supplier
     public function getAll() {
-        $query = "SELECT * FROM supplier";
+        $query = "SELECT * FROM pelanggan";
         $result = $this->conn->query($query);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     // Ambil supplier berdasarkan ID
     public function getById($id) {
-        $query = "SELECT * FROM supplier WHERE id_supplier = $id";
+        $query = "SELECT * FROM pelanggan WHERE PelangganID = $id";
         $result = $this->conn->query($query);
         return $result->fetch_assoc();
     }
 
     // Tambah supplier baru
     public function create($nama, $kontak, $alamat) {
-        $query = "INSERT INTO supplier (nama, kontak, alamat, created_at) VALUES ('$nama', '$kontak', '$alamat', NOW())";
+        $query = "INSERT INTO pelanggan (NamaPelanggan, Alamat, NomorTelepon) VALUES ('$nama', '$kontak', '$alamat')";
         return $this->conn->query($query);
     }
 
     // Update supplier
     public function update($id, $nama, $kontak, $alamat) {
-        $query = "UPDATE supplier SET nama = '$nama', kontak = '$kontak', alamat = '$alamat' WHERE id_supplier = $id";
+        $query = "UPDATE pelanggan SET NamaPelanggan = '$nama', Alamat = '$nomortelepon', NomorTelepon = '$alamat' WHERE PelangganID = $id";
         return $this->conn->query($query);
     }
 
     // Hapus supplier
     public function delete($id) {
-        $query = "DELETE FROM supplier WHERE id_supplier = $id";
+        $query = "DELETE FROM pelanggan WHERE PelangganID = $id";
         return $this->conn->query($query);
     }
 }

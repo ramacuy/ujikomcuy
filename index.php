@@ -2,20 +2,20 @@
     session_start();
 
     require_once 'config/database.php';
-    require_once 'controllers/SupplierController.php';
-    require_once 'controllers/BarangController.php';
-    require_once 'controllers/DistribusiController.php';
-    require_once 'controllers/DetailDistribusiController.php';
+    require_once 'controllers/PelangganController.php';
+    require_once 'controllers/ProdukController.php';
+    require_once 'controllers/PenjualanController.php';
+    require_once 'controllers/DetailPenjualanController.php';
     require_once 'controllers/HomeController.php';
 
     $db = new Database();
 
     // Inisialisasi controller
     $controllers = [
-        'supplier' => new SupplierController($db),
-        'barang' => new BarangController($db),
-        'detail_distribusi' => new DetailDistribusiController($db),
-        'distribusi' => new DistribusiController($db),
+        'pelanggan' => new PelangganController($db),
+        'produk' => new ProdukController($db),
+        'detail_penjualan' => new DetailPenjualanController($db),
+        'penjualan' => new PenjualanController($db),
         'home' => new HomeController($db),
     ];
 
@@ -72,7 +72,6 @@
                 throw new Exception("Aksi tidak valid!");
             }
         }
-
     } catch (Exception $e) {
         echo "<div class='container mt-5'><div class='alert alert-danger'>{$e->getMessage()}</div></div>";
     }

@@ -1,7 +1,7 @@
 <?php
 class database {
     private $host = "localhost";
-    private $db_name = "sortiran";
+    private $db_name = "gudang";
     private $username = "root";
     private $password = "";
     private $conn;

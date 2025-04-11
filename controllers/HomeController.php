@@ -1,30 +1,30 @@
 <?php
-require_once 'models/Barang.php';
-require_once 'models/Distribusi.php';
-require_once 'models/Supplier.php';
+require_once 'models/Produk.php';
+require_once 'models/DetailPenjualan.php';
+require_once 'models/Pelanggan.php';
 
 class HomeController {
-    private $barangModel;
-    private $detaildistribusiModel;
-    private $supplierModel;
+    private $produkModel;
+    private $penjualanModel;
+    private $pelangganModel;
 
     public function __construct($db) {
-        $this->barangModel = new Barang($db);
-        $this->detaildistribusiModel = new DetailDistribusi($db);
-        $this->supplierModel = new Supplier($db);
+        $this->produkModel = new Produk($db);
+        $this->penjualanModel = new Penjualan($db);
+        $this->pelangganModel = new Pelanggan($db);
     }
 
     public function index() {
-        $dataBarang = $this->barangModel->getAll();
-        $jumlahBarang = count($dataBarang);
+        $dataProduk = $this->produkModel->getAll();
+        $jumlahProduk = count($dataProduk);
 
-        $distribusiBarang = $this->detaildistribusiModel->getAll();
-        $jumlahDetailDistribusi = count($distribusiBarang);
+        $dataPenjualan = $this->penjualanModel->getAll();
+        $jumlahPenjualan = count($dataPenjualan);
 
-        $dataSupplier = $this->supplierModel->getAll();
-        $jumlahSupplier = count($dataSupplier);
+        $dataPelanggan = $this->pelangganModel->getAll();
+        $jumlahPelanggan = count($dataPelanggan);
 
-        // variabel ini akan tersedia di view
+        // Kirim data ke view
         include 'views/content/home.php';
     }
 }
