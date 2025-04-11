@@ -3,28 +3,28 @@ $pelanggan = $pelanggan ?? [];
 ?>
 
 <div class="container mt-5">
-    <h2>Daftar Supplier</h2>
+    <h2>Daftar Pelanggan</h2>
 
-    <!-- Notification -->
+    <!-- Notifikasi -->
     <?php if (isset($_SESSION['message'])) : ?>
         <div class="alert alert-info"><?= $_SESSION['message']; ?></div>
         <?php unset($_SESSION['message']); ?>
     <?php endif; ?>
 
-    <!-- Add Button -->
+    <!-- Tombol Tambah -->
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-        Tambah Supplier
+        Tambah Pelanggan
     </button>
 
-    <!-- Supplier Table -->
+    <!-- Tabel Pelanggan -->
     <div class="table-responsive">
-        <table class="table table-bordered table-hover" id="tabel-supplier">
+        <table class="table table-bordered table-hover" id="tabel-pelanggan">
             <thead class="table-dark">
                 <tr>
                     <th>No</th>
-                    <th>Nama Supplier</th>
-                    <th>Kontak</th>
+                    <th>Nama Pelanggan</th>
                     <th>Alamat</th>
+                    <th>Nomor Telepon</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -33,22 +33,18 @@ $pelanggan = $pelanggan ?? [];
                     <?php $no = 1; foreach ($pelanggan as $p) : ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= htmlspecialchars($p['NamaPelanggan'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($p['Alamat'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($p['NomorTelepon'], ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?= htmlspecialchars($p['NamaPelanggan']); ?></td>
+                            <td><?= htmlspecialchars($p['Alamat']); ?></td>
+                            <td><?= htmlspecialchars($p['NomorTelepon']); ?></td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $p['PelangganID']; ?>">
-                                    Edit
-                                </button>
-                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $p['PelangganID']; ?>">
-                                    Hapus
-                                </button>
+                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $p['PelangganID']; ?>">Edit</button>
+                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalHapus<?= $p['PelangganID']; ?>">Hapus</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="7" class="text-center">Data supplier tidak ditemukan.</td>
+                        <td colspan="5" class="text-center">Data pelanggan tidak ditemukan.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -56,85 +52,91 @@ $pelanggan = $pelanggan ?? [];
     </div>
 </div>
 
-<!-- Add Supplier Modal -->
+<!-- Modal Tambah Pelanggan -->
 <div class="modal fade" id="modalTambah" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Supplier</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form action="index.php?page=pelanggan&action=store" method="POST">
+            <form action="index.php?page=pelanggan&action=store" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Pelanggan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Nama Supplier</label>
+                        <label class="form-label">Nama Pelanggan</label>
                         <input type="text" name="nama" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Alamat</label>
-                        <textarea name="alamat" class="form-control"></textarea>
+                        <textarea name="alamat" class="form-control" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">nomor telepon</label>
-                        <input type="text" name="nomortelepon" class="form-control">
+                        <label class="form-label">Nomor Telepon</label>
+                        <input type="text" name="nomortelepon" class="form-control" required>
                     </div>
+                </div>
+                <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
-            </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Edit & Delete Modals -->
+<!-- Modal Edit & Hapus -->
 <?php foreach ($pelanggan as $p) : ?>
-    <!-- Edit Supplier Modal -->
+    <!-- Modal Edit -->
     <div class="modal fade" id="modalEdit<?= $p['PelangganID']; ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Supplier</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="index.php?page=supplier&action=update" method="POST">
-                        <input type="hidden" name="id_supplier" value="<?= $p['PelangganID']; ?>">
+                <form action="index.php?page=pelanggan&action=update" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Pelanggan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id_pelanggan" value="<?= $p['PelangganID']; ?>">
                         <div class="mb-3">
-                            <label class="form-label">Nama Supplier</label>
-                            <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($p['NamaPelanggan'], ENT_QUOTES, 'UTF-8'); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Kontak</label>
-                            <input type="text" name="kontak" class="form-control" value="<?= htmlspecialchars($p['Alamat'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <label class="form-label">Nama Pelanggan</label>
+                            <input type="text" name="nama" class="form-control" value="<?= htmlspecialchars($p['NamaPelanggan']); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Alamat</label>
-                            <textarea name="alamat" class="form-control"><?= htmlspecialchars($p['NomorTelepon'], ENT_QUOTES, 'UTF-8'); ?></textarea>
+                            <textarea name="alamat" class="form-control" required><?= htmlspecialchars($p['Alamat']); ?></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </form>
-                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nomor Telepon</label>
+                            <input type="text" name="nomortelepon" class="form-control" value="<?= htmlspecialchars($p['NomorTelepon']); ?>" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Delete Supplier Modal -->
+    <!-- Modal Hapus -->
     <div class="modal fade" id="modalHapus<?= $p['PelangganID']; ?>" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Konfirmasi Hapus</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Yakin ingin menghapus supplier <strong><?= htmlspecialchars($p['NamaPelanggan'], ENT_QUOTES, 'UTF-8'); ?></strong>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <form action="index.php?page=supplier&action=destroy" method="POST">
-                        <input type="hidden" name="id_supplier" value="<?= $p['PelangganID']; ?>">
+                <form action="index.php?page=pelanggan&action=destroy" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Yakin ingin menghapus pelanggan <strong><?= htmlspecialchars($p['NamaPelanggan']); ?></strong>?</p>
+                        <input type="hidden" name="id_pelanggan" value="<?= $p['PelangganID']; ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-danger">Hapus</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

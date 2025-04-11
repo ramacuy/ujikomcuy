@@ -18,7 +18,7 @@
 // Inisialisasi tabel DataTables dan footer tahun otomatis
 $(document).ready(function () {
     // Tabel Supplier
-    $('#tabel-supplier').DataTable({
+    $('#tabel-pelanggan').DataTable({
         responsive: true,
         pageLength: 5,
         lengthMenu: [5, 10, 25, 50]

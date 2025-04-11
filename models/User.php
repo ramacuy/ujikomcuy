@@ -13,7 +13,7 @@ class User {
         $password = md5($password); // Gunakan MD5 sesuai struktur awal
 
         // ✅ Pastikan nama tabel adalah `user`, bukan `users`
-        $stmt = $this->conn->prepare("SELECT * FROM usersgir WHERE username = ? AND password = ?");
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
         $stmt->bind_param("ss", $username, $password);
         $stmt->execute();
         $result = $stmt->get_result();
